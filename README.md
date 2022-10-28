@@ -57,13 +57,13 @@ As a user I want the ability to…
 
 
 ## Wireframes
-![Home Page](/Homepage.png)
-![Sign Up](/Sign-Up.png)
-![Sign In](/Sign-In.png)
-![Company Index](/Companies.png)
-![Company Show](/Ratings.png)
-![Create Review](/Create-Rating.png)
+![Home Page](/images/wireframes/Homepage.png)
+![Sign Up](/images/wireframes/Sign-Up.png)
+![Sign In](/images/wireframes/Sign-In.png)
+![Company Index](/images/wireframes/Companies.png)
+![Company Show](/images/wireframes/Ratings.png)
+![Create Review](/images/wireframes/Create-Rating.png)
 
 
 ## Entity Relationships
-![Entity Relationships](/erd.png)
+![Entity Relationships](/images/wireframes/erd.png)
