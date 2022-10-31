@@ -5,7 +5,7 @@ const express = require('express')
 const passport = require('passport')
 
 // pull in Mongoose model for companies
-const Companies = require('../models/companies')
+const Companies = require('../models/company')
 
 const customErrors = require('../../lib/custom_errors')
 

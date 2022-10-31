@@ -1,32 +1,28 @@
 const mongoose = require('mongoose')
-const user = require('./user')
 
 const reviewSchema = new mongoose.Schema(
-    {
+	{
 		title: {
 			type: String,
 			required: true,
 		},
 		content: {
 			type: String,
-			required: true,
 		},
-        generalRating: {
+		generalRating: {
 			type: Number,
-			required: true,
-		},
-        author: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
-			required: true,
+            required: true,
 		},
         startingPosition: {
-			type: String,
-			required: true,
-		},
+            type: String,
+        },
         startingSalary: {
-			type: Number,
-			required: true,
+            type: Number,
+        },
+		owner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+
 		},
 	},
 )

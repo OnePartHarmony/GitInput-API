@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 
 const companySchema = new mongoose.Schema(
-    {
+
+	{
 		title: {
 			type: String,
 			required: true,
@@ -10,7 +11,16 @@ const companySchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		logo: {
+			type: Image,
+		},
+		owner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
+		},
 	},
 )
 
+
 module.exports = mongoose.model('Company', companySchema)
+
