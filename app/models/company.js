@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const companySchema = new mongoose.Schema(
+
 	{
 		title: {
 			type: String,
@@ -20,4 +21,6 @@ const companySchema = new mongoose.Schema(
 	},
 )
 
-module.exports = mongoose.model('Companies', companySchema)
+
+module.exports = mongoose.model('Company', companySchema)
+

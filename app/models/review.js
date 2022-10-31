@@ -9,19 +9,20 @@ const reviewSchema = new mongoose.Schema(
 		content: {
 			type: String,
 		},
-		genRating: {
+		generalRating: {
 			type: Number,
             required: true,
 		},
-        startPosition: {
+        startingPosition: {
             type: String,
         },
-        salaryStart: {
+        startingSalary: {
             type: Number,
         },
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
+
 		},
 	},
 )

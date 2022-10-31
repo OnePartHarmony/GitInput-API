@@ -1,3 +1,4 @@
+
 // Express docs: http://expressjs.com/en/api.html
 const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
@@ -105,3 +106,20 @@ router.delete('/companies/:id', requireToken, (req, res, next) => {
 })
 
 module.exports = router
+=======
+const express = require('express')
+const passport = require('passport')
+
+const Company = require('../models/company')
+
+const customErrors = require('../../lib/custom_errors')
+const requireOwnership = customErrors.requireOwnership
+const removeBlanks = require('../../lib/remove_blank_fields')
+const requireToken = passport.authenticate('bearer', { session: false })
+
+const router = express.Router()
+
+
+
+module.exports = router
+
