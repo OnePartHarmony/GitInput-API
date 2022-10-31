@@ -11,9 +11,7 @@ const companySchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		logo: {
-			type: Image,
-		},
+
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
