@@ -6,18 +6,13 @@ const passport = require('passport')
 // pull in Mongoose model for companies
 const Companies = require('../models/companies')
 
-// this is a collection of methods that help us detect situations when we need
-// to throw a custom error
 const customErrors = require('../../lib/custom_errors')
 
-// we'll use this function to send 404 when non-existant document is requested
 const handle404 = customErrors.handle404
-// we'll use this function to send 401 when a user tries to modify a resource
-// that's owned by someone else
 const requireOwnership = customErrors.requireOwnership
 
 // this is middleware that will remove blank fields from `req.body`, e.g.
-// { example: { title: '', text: 'foo' } } -> { example: { text: 'foo' } }
+// { company: { title: '', text: 'foo' } } -> { company: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -28,16 +23,13 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /examples
+// GET /companies
 router.get('/companies', requireToken, (req, res, next) => {
 	Companies.find()
 		.then((companies) => {
-			// `examples` will be an array of Mongoose documents
-			// we want to convert each one to a POJO, so we use `.map` to
-			// apply `.toObject` to each one
+			// `companies` will be an array of Mongoose documents
 			return companies.map((company) => company.toObject())
 		})
-		// respond with status 200 and JSON of the examples
 		.then((companies) => res.status(200).json({ companies: company }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
@@ -49,20 +41,20 @@ router.get('/companies/:id', requireToken, (req, res, next) => {
 	// req.params.id will be set based on the `:id` in the route
 	Companies.findById(req.params.id)
 		.then(handle404)
-		// if `findById` is succesful, respond with 200 and "example" JSON
+		// if `findById` is succesful, respond with 200 and "company" JSON
 		.then((company) => res.status(200).json({ compnay: company.toObject() }))
 		// if an error occurs, pass it to the handler
 		.catch(next)
 })
 
 // CREATE
-// POST /examples
+// POST /companies
 router.post('/companies', requireToken, (req, res, next) => {
-	// set owner of new example to be current user
+	// set owner of new company to be current user
 	req.body.company.owner = req.user.id
 
 	Companies.create(req.body.compnay)
-		// respond to succesful `create` with status 201 and JSON of new "example"
+		// respond to succesful `create` with status 201 and JSON of new "company"
 		.then((company) => {
 			res.status(201).json({ company: company.toObject() })
 		})
@@ -73,7 +65,7 @@ router.post('/companies', requireToken, (req, res, next) => {
 })
 
 // UPDATE
-// PATCH /examples/5a7db6c74d55bc51bdf39793
+// PATCH /companies/5a7db6c74d55bc51bdf39793
 router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
 	// if the client attempts to change the `owner` property by including a new
 	// owner, prevent that by deleting that key/value pair
@@ -96,7 +88,7 @@ router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
 })
 
 // DESTROY
-// DELETE /examples/5a7db6c74d55bc51bdf39793
+// DELETE /companies/5a7db6c74d55bc51bdf39793
 router.delete('/companies/:id', requireToken, (req, res, next) => {
 	Companies.findById(req.params.id)
 		.then(handle404)

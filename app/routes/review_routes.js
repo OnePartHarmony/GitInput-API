@@ -1,6 +1,6 @@
 // Import Dependencies
 const express = require('express')
-const items = require('./companies')
+const Companies = require('./companies')
 
 // Create router
 const router = express.Router()
@@ -13,7 +13,7 @@ router.post("/:companyId", (req, res) => {
         .then(company => {
             // push the review into the company.reviews array
             company.comments.push(req.body)
-            // we need to save the item
+            // we need to save the company
             return company.save()
         })
         .then(company => {
@@ -29,12 +29,12 @@ router.delete('/delete/:companyId/:revId', (req, res) => {
     // isolate the ids and save to vars for easy ref
     const companyId = req.params.companyId 
     const revId = req.params.revId
-    // get the item
+    // get the company
     Company.findById(companyId)
         .then(company => {
             // get the review
             // this built in method is called .id()
-            const theReview = item.reviews.id(revId)
+            const theReview = company.reviews.id(revId)
             console.log('this is the review that was found', theReview)
             // make sure the user is logged in
             if (req.session.loggedIn) {
@@ -43,7 +43,7 @@ router.delete('/delete/:companyId/:revId', (req, res) => {
                     theReview.remove()
                     company.save()
                     res.redirect(`/companies/${company.id}`)
-                    // return the saved item
+                    // return the saved company
                     return company.save()
                 } else {
                     const err = 'you%20are%20not%20authorized%20for%20this%20action'
