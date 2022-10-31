@@ -10,8 +10,8 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 const router = express.Router()
 
-const express = require("express")
 const Comment = require("../models/comment")
+const comment = require('../models/comment')
 
 
 // POST
@@ -32,6 +32,20 @@ router.post("/:companyId", (req, res) => {
             res.redirect(`/companies/${company.id}`)
         })
         .catch(err => res.redirect(`/error?error=${err}`))
+})
+
+// Update
+router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
+    delete req.body.comment.owner
+
+    Comment.findById(req.params.id)
+    .then(handle404)
+    .then(comment => {
+        return comment.updateOne(req.body.comment)
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
+
 })
 
 // DELETE
