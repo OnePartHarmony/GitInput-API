@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const exampleSchema = new mongoose.Schema(
+const companySchema = new mongoose.Schema(
 	{
 		title: {
 			type: String,
@@ -21,4 +21,4 @@ const exampleSchema = new mongoose.Schema(
 	}
 )
 
-module.exports = mongoose.model('Example', exampleSchema)
+module.exports = mongoose.model('Companies', companySchema)
