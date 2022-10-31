@@ -15,6 +15,7 @@ const reviewSchema = new mongoose.Schema(
 		},
         startingPosition: {
             type: String,
+			//[intern, junior, senior, manager]
         },
         startingSalary: {
             type: Number,

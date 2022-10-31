@@ -14,6 +14,9 @@ const companySchema = new mongoose.Schema(
 		logo: {
 			type: Image,
 		},
+		averageRating: {
+			type: Number,
+		},
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
