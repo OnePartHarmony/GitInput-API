@@ -11,7 +11,7 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 const Comment = require("../models/comment")
-const comment = require('../models/comment')
+// const comment = require('../models/comment')
 
 
 // POST
