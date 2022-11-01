@@ -306,7 +306,7 @@ const startCompanies = [
         logo: "https://logo.clearbit.com/intuit.com",
         domain: "intuit.com",
         description: "Intuit Inc. is an American business software company that specializes in financial software. The company is headquartered in Mountain View, California, and the CEO is Sasan Goodarzi. Intuit's products include the tax preparation application TurboTax, personal finance app Mint, the small business accounting program QuickBooks, the credit monitoring service Credit Karma, and email marketing platform Mailchimp."
-    }
+    },
     {
         name: "SS&C Technologies",
         logo: "https://logo.clearbit.com/ssctech.com",

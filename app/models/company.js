@@ -12,7 +12,7 @@ const companySchema = new mongoose.Schema(
 			required: true,
 		},
 		logo: {
-			type: Image,
+			type: String,
 		},
 		averageRating: {
 			type: Number,
