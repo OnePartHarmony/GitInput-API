@@ -36,6 +36,15 @@ router.get('/companies', requireToken, (req, res, next) => {
 		.catch(next)
 })
 
+//SEARCH
+// GET /companies
+router.get('/companies', requireToken, (req, res, next) => {
+
+	Companies.find(/*placeholder*/)
+	.then((companies) => {
+	})
+})
+
 // SHOW
 // GET /companies/5a7db6c74d55bc51bdf39793
 router.get('/companies/:id', requireToken, (req, res, next) => {

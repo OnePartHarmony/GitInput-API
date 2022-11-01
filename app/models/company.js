@@ -7,17 +7,19 @@ const companySchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		logo: {
-			type: String,
-			required: true,
-		},
-		domain: {
-			type: String,
-			required: true,
-		},
 		description: {
 			type: String,
 			required: true,
+		},
+		logo: {
+			type: String,
+		},
+		averageRating: {
+			type: Number,
+		},
+		owner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User',
 		},
 	},
 )

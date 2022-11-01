@@ -1,10 +1,13 @@
-const mongoose = require('./connection')
-const Company = require('./company')
+const mongoose = require('mongoose')
 
+const database = require('../../config/db')
+mongoose.connect(database, {useNewUrlParser: true})
+const Company = require('./company')
 
 const db = mongoose.connection
 
-db.on('open', () => {
+
+
 const startCompanies = [
     {
         name: 'Walmart',
@@ -205,7 +208,7 @@ const startCompanies = [
         description: "The Boeing Company is an American multinational corporation that designs, manufactures, and sells airplanes, rotorcraft, rockets, satellites, telecommunications equipment, and missiles worldwide."
     },
     {
-        name: "HCA Healthcare",
+        name:  "HCA Healthcare",
         logo: "https://logo.clearbit.com/hcahealthcare.com",
         domain: "hcahealthcare.com",
         description: "HCA Healthcare is an American for-profit operator of health care facilities that was founded in 1968."
@@ -399,6 +402,7 @@ const startCompanies = [
     }
 ]
 
+<<<<<<< HEAD
 // db.on('open', () => {
 //     Company.deleteMany()
 //         .then(() => {
@@ -428,6 +432,19 @@ Company.deleteMany({})
         .catch(error => {
             console.log(error)
             db.close()
+=======
+db.on('open', () => {
+  Company.deleteMany()
+    .then(() => {
+      Company.create(startCompanies)
+        .then(data => {
+            console.log(data)
+            db.close()
+        })
+        .catch(err => {
+          console.error(err)
+          db.close()
+>>>>>>> 81de90d735adc59c1b0ba0597affb7a7db643124
         })
 })
 .catch(error => {

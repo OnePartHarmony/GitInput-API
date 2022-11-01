@@ -4,25 +4,25 @@ const reviewSchema = new mongoose.Schema(
 	{
 		title: {
 			type: String,
-			required: true,
+			required: true
 		},
 		content: {
-			type: String,
+			type: String
 		},
 		generalRating: {
 			type: Number,
-            required: true,
+            required: true
 		},
         startingPosition: {
             type: String,
-			enum: ['intern', 'junior', 'senior', 'manager']
+		enum: ['intern', 'junior', 'senior', 'manager']
         },
         startingSalary: {
-            type: Number,
+            type: Number
         },
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
+			ref: 'User'
 
 		},
 	},
