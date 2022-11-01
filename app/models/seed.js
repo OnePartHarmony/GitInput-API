@@ -402,37 +402,6 @@ const startCompanies = [
     }
 ]
 
-<<<<<<< HEAD
-// db.on('open', () => {
-//     Company.deleteMany()
-//         .then(() => {
-//             Company.create(startCompanies)
-//             console.log('this is the seeded data')
-//                 .then(() => db.close())
-//                 .catch(err => {
-//                     console.error(err)
-//                     db.close()
-//                 })
-//         })
-//         .catch(err => {
-//             console.error(err)
-//             db.close()
-//         })
-// })
-
-Company.deleteMany({})
-.then(deletedCompanies => {
-    console.log('this is what .deleteMany returns', deletedCompanies)
-
-    Company.create(startCompanies)
-        .then(data => {
-            console.log('here are the newly created companies', data)
-            db.close()
-        })
-        .catch(error => {
-            console.log(error)
-            db.close()
-=======
 db.on('open', () => {
   Company.deleteMany()
     .then(() => {
@@ -444,7 +413,6 @@ db.on('open', () => {
         .catch(err => {
           console.error(err)
           db.close()
->>>>>>> 81de90d735adc59c1b0ba0597affb7a7db643124
         })
 })
 .catch(error => {
