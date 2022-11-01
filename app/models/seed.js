@@ -1,9 +1,12 @@
-
 const mongoose = require('mongoose')
+
+const database = require('../../config/db')
+mongoose.connect(database, {useNewUrlParser: true})
 const Company = require('./company')
 
-
 const db = mongoose.connection
+
+
 
 const startCompanies = [
     {
@@ -403,7 +406,10 @@ db.on('open', () => {
   Company.deleteMany()
     .then(() => {
       Company.create(startCompanies)
-        .then(() => db.close())
+        .then(data => {
+            console.log(data)
+            db.close()
+        })
         .catch(err => {
           console.error(err)
           db.close()
