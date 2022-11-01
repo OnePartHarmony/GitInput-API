@@ -15,6 +15,7 @@ router.post("/:companyId", (req, res) => {
             // push the review into the company.reviews array
             company.comments.push(req.body)
             // we need to save the company
+            // averageRating()
             return company.save()
         })
         .then(company => {
