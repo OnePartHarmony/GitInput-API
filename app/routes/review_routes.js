@@ -1,22 +1,52 @@
 const express = require('express')
 const Company = require('../models/company')
+const Review = require('../models/review')
+
+const passport = require('passport')
+const requireToken = passport.authenticate('bearer', { session: false })
 
 const router = express.Router()
 
-// all users can post reviews
-router.post("/:companyId", (req, res) => {
-    const companyId = req.params.companiesId
 
-    Company.findById(companyId)
-        .then(company => {
-            company.comments.push(req.body)
-            return company.save()
+///////GET route to INDEX reviews by company//////
+router.get('/reviews/:companyId', (req, res, next) => {
+    const companyId = req.params.companyId
+    console.log(companyId)
+    Review.find({company: companyId})
+        .then(reviews => {
+            res.status(200).json({ reviews: reviews })
         })
-        .then(company => {
-            res.redirect(`/companies/${company.id}`)
-        })
-        .catch(err => res.redirect(`/error?error=${err}`))
+        .catch(next)
 })
+
+////POST route to CREATE review//////////
+router.post("/reviews", requireToken, (req,res,next) => {
+    Review.create(req.body.review)
+        .then(res.sendStatus(201))
+        .catch(next)
+})
+
+
+// all users can post reviews
+// router.post("reviews/:companyId", (req, res) => {
+//     const companyId = req.params.companyId
+
+//     Company.findById(companyId)
+//         .then(company => {
+//             // push the review into the company.reviews array
+//             company.comments.push(req.body)
+//             // we need to save the company
+//             // averageRating()
+//             return company.save()
+//         })
+//         .then(company => {
+//             res.redirect(`/companies/${company.id}`)
+//         })
+//         //  --> send some kind of error depending on what went wrong
+//         .catch(err => res.redirect(`/error?error=${err}`))
+// })
+
+
 
 // DELETE
 router.delete('/delete/:companyId/:revId', (req, res) => {

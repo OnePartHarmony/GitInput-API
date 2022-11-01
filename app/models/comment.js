@@ -3,7 +3,7 @@ const user = require('./user')
 
 const commentSchema = new mongoose.Schema(
     {
-		note: {
+		comment: {
 			type: String,
 			required: true,
 		},

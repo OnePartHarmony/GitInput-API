@@ -3,7 +3,9 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-const Companies = require('../models/company')
+
+const Company = require('../models/company')
+
 
 const customErrors = require('../../lib/custom_errors')
 
@@ -13,16 +15,16 @@ const requireOwnership = customErrors.requireOwnership
 const removeBlanks = require('../../lib/remove_blank_fields')
 const requireToken = passport.authenticate('bearer', { session: false })
 
+
 const router = express.Router()
 
 // INDEX
-// GET 
+// GET /companies
 router.get('/companies', (req, res, next) => {
-	Companies.find()
+	Company.find()
 		.then((companies) => {
-			return companies.map((company) => company.toObject())
+			res.status(200).json({ companies: companies })
 		})
-		.then((companies) => res.status(200).json({ companies }))
 		.catch(next)
 })
 
@@ -30,7 +32,8 @@ router.get('/companies', (req, res, next) => {
 // GET 
 // router.get('/companies', requireToken, (req, res, next) => {
 
-// 	Companies.find()
+
+// 	Company.find()
 // 	.then((companies) => {
 // 	})
 // })
@@ -41,6 +44,7 @@ router.get('/companies/:id', (req, res, next) => {
 	Companies.findById(req.params.id)
 		.then(handle404)
 		.then((company) => res.status(200).json({ company: company.toObject() }))
+
 		.catch(next)
 })
 
@@ -49,9 +53,10 @@ router.get('/companies/:id', (req, res, next) => {
 router.post('/companies', requireToken, (req, res, next) => {
 	req.body.company.owner = req.user.id
 
-	Companies.create(req.body.compnay)
+
+	Companies.create(req.body.company)
 		.then((company) => {
-			res.status(201).json({ company: company.toObject() })
+			res.status(201).json({ company: company})
 		})
 
 		.catch(next)
@@ -62,7 +67,7 @@ router.post('/companies', requireToken, (req, res, next) => {
 router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
 	delete req.body.company.owner
 
-	Companies.findById(req.params.id)
+	Company.findById(req.params.id)
 		.then(handle404)
 		.then((company) => {
 			requireOwnership(req, company)
@@ -76,7 +81,7 @@ router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
 // DESTROY
 // DELETE 
 router.delete('/companies/:id', requireToken, (req, res, next) => {
-	Companies.findById(req.params.id)
+	Company.findById(req.params.id)
 		.then(handle404)
 		.then((company) => {
 			requireOwnership(req, company)
