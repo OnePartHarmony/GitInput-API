@@ -134,9 +134,7 @@ router.patch('/change-password', requireToken, (req, res, next) => {
 })
 
 router.delete('/sign-out', requireToken, (req, res, next) => {
-	// create a new random token for the user, invalidating the current one
 	req.user.token = crypto.randomBytes(16)
-	// save the token and respond with 204
 	req.user
 		.save()
 		.then(() => res.sendStatus(204))
