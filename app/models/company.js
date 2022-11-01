@@ -14,6 +14,10 @@ const companySchema = new mongoose.Schema(
 		logo: {
 			type: String,
 		},
+        domain: {
+            type: String,
+            required: true
+        },
 		averageRating: {
 			type: Number,
 		},
@@ -23,7 +27,7 @@ const companySchema = new mongoose.Schema(
 		},
 	},
 )
-
+ 
 
 module.exports = mongoose.model('Company', companySchema)
 
