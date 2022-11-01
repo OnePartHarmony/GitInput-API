@@ -1,9 +1,12 @@
-
 const mongoose = require('mongoose')
+
+const database = require('../../config/db')
+mongoose.connect(database, {useNewUrlParser: true})
 const Company = require('./company')
 
-
 const db = mongoose.connection
+
+
 
 const startCompanies = [
     {
@@ -317,7 +320,7 @@ const startCompanies = [
         name: "NetApp",
         logo: "https://logo.clearbit.com/netapp.com",
         domain: "netapp.com",
-        description: "NetApp, Inc. is an American hybrid cloud data services and data management company headquartered in San Jose, California. It has ranked in the Fortune 500 from 2012–2021. Founded in 1992[ with an IPO in 1995, NetApp offers cloud data services for management of applications and data both online and physically."
+        description: "NetApp, Inc. is an American hybrid cloud data services and data management company headquartered in San Jose, California. It has ranked in the Fortune 500 from 2012-2021. Founded in 1992[ with an IPO in 1995, NetApp offers cloud data services for management of applications and data both online and physically."
     },
     {
         name: "ServiceNow",
@@ -329,7 +332,7 @@ const startCompanies = [
         name: "Workday, Inc",
         logo: "https://logo.clearbit.com/workday.com",
         domain: "workday.com",
-        description: "Workday, Inc., is an American on‑demand (cloud-based) financial management, human capital management and Student information system software vendor. Workday was founded by David Duffield, founder and former CEO of ERP company PeopleSoft, along with former PeopleSoft chief strategist Aneel Bhusri, following Oracle's acquisition of PeopleSoft in 2005."
+        description: "Workday, Inc., is an American on-demand (cloud-based) financial management, human capital management and Student information system software vendor. Workday was founded by David Duffield, founder and former CEO of ERP company PeopleSoft, along with former PeopleSoft chief strategist Aneel Bhusri, following Oracle's acquisition of PeopleSoft in 2005."
     },
     {
         name: "Broadridge Financial Solutions",
@@ -403,7 +406,10 @@ db.on('open', () => {
   Company.deleteMany()
     .then(() => {
       Company.create(startCompanies)
-        .then(() => db.close())
+        .then(data => {
+            console.log(data)
+            db.close()
+        })
         .catch(err => {
           console.error(err)
           db.close()
