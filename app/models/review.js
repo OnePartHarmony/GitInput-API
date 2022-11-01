@@ -15,7 +15,7 @@ const reviewSchema = new mongoose.Schema(
 		},
         startingPosition: {
             type: String,
-		enum: ['intern', 'junior', 'senior', 'manager']
+		enum: ['Intern', 'Junior', 'Senior', 'Manager']
         },
         startingSalary: {
             type: Number
@@ -23,7 +23,10 @@ const reviewSchema = new mongoose.Schema(
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'
-
+		},
+		company: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'Company'
 		},
 	},
 )
