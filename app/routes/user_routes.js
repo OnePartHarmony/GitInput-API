@@ -29,6 +29,7 @@ const router = express.Router()
 // POST /sign-up
 router.post('/sign-up', (req, res, next) => {
 	// start a promise chain, so that any errors will pass to `handle`
+	console.log('inside of sign-up post', req.body.credentials)
 	Promise.resolve(req.body.credentials)
 		// reject any requests where `credentials.password` is not present, or where
 		// the password is an empty string
