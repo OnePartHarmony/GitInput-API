@@ -15,7 +15,7 @@ const comment = require('../models/comment')
 
 
 // POST
-router.post("/:companyId", (req, res) => {
+router.post("/comments/:reviewId", (req, res) => {
     const companyId = req.params.companyId
 
     if (req.session.loggedIn) {
@@ -35,7 +35,7 @@ router.post("/:companyId", (req, res) => {
 })
 
 // Update
-router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/comments/:id', requireToken, removeBlanks, (req, res, next) => {
     delete req.body.comment.owner
 
     Comment.findById(req.params.id)
@@ -49,7 +49,7 @@ router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
 })
 
 // DELETE
-router.delete('/delete/:companyId/:commId', (req, res) => {
+router.delete('/delete/:reviewId/:commId', (req, res) => {
     const companyId = req.params.companyId 
     const commId = req.params.commId
     Product.findById(companyId)
