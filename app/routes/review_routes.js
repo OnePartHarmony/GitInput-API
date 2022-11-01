@@ -1,7 +1,7 @@
 
 // Import Dependencies
 const express = require('express')
-const Companies = require('./companies')
+const Company = require('../models/company')
 
 // Create router
 const router = express.Router()
