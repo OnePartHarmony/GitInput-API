@@ -232,13 +232,13 @@ const startCompanies = [
         name: "PayPal",
         logo: "https://logo.clearbit.com/paypal.com",
         domain: "paypal.com",
-        description: "PayPal Holdings, Inc. is an American multinational financial technology company operating an online payments system in the majority of countries that support online money transfers, and serves as an electronic alternative to traditional paper methods.""
+        description: "PayPal Holdings, Inc. is an American multinational financial technology company operating an online payments system in the majority of countries that support online money transfers, and serves as an electronic alternative to traditional paper methods."
     },
     {
         name: "Salesforce",
         logo: "https://logo.clearbit.com/salesforce.com",
         domain: "salesforce.com",
-        description: "We bring companies and customers together on the world's number one CRM. Sharing the inspiration you need to change the world for good.""
+        description: "We bring companies and customers together on the world's number one CRM. Sharing the inspiration you need to change the world for good."
     },
     {
         name: "AT&T",
@@ -293,7 +293,7 @@ const startCompanies = [
         name: "VMware",
         logo: "https://logo.clearbit.com/vmware.com",
         domain: "vmware.com",
-        description: "VMware, Inc. is an American cloud computing and virtualization technology company with headquarters in Palo Alto, California. VMware was the first commercially successful company to virtualize the x86 architecture.""
+        description: "VMware, Inc. is an American cloud computing and virtualization technology company with headquarters in Palo Alto, California. VMware was the first commercially successful company to virtualize the x86 architecture."
     },
     {
         name: "Global Payments",
