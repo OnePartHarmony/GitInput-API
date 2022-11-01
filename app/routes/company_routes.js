@@ -43,7 +43,7 @@ router.get('/companies', (req, res, next) => {
 router.get('/companies/:id', (req, res, next) => {
 	Companies.findById(req.params.id)
 		.then(handle404)
-		.then((company) => res.status(200).json({ company: company.toObject() }))
+		.then((company) => res.status(200).json({ company: company}))
 
 		.catch(next)
 })
