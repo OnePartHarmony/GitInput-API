@@ -14,14 +14,14 @@ const Comment = require("../models/comment")
 
 // POST
 router.post("/comments/:reviewId", (req, res) => {
-    const companyId = req.params.companyId
+    const reviewId = req.params.reviewId
 
     if (req.session.loggedIn) {
         req.body.author = req.session.userId
     } else {
         res.sendStatus(401)
     }
-    Product.findById(companyId)
+    Product.findById(reviewId)
         .then(company => {
             company.comments.push(req.body)
             return company.save()
