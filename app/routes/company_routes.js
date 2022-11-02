@@ -52,7 +52,6 @@ router.get('/companies/:id', (req, res, next) => {
 // POST 
 router.post('/companies', requireToken, (req, res, next) => {
 	req.body.company.owner = req.user.id
-	console.log("trying to create a company", Company)
 
 	Company.create(req.body.company)
 		.then((company) => {
