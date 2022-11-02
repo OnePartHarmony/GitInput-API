@@ -29,14 +29,18 @@ router.get('/companies', (req, res, next) => {
 })
 
 //SEARCH
-// GET 
-// router.get('/companies', requireToken, (req, res, next) => {
-
-
-// 	Company.find()
-// 	.then((companies) => {
-// 	})
-// })
+// POST
+router.post('/companies', requireToken, async (req, res, next) => {
+	const queryString = req.body.queryString
+	const queryStrings = queryString.split(" ")
+	allQueries = []
+	queryStrings.forEach(element => {
+		allQueries.push({name: {$regex : String(element)}})
+	})
+	const allCompanies = await Company.find({$or : allQueries})
+	if (!allCompanies || allCompanies.length === 0) res.status(400).send({error : "No company found"})
+	res.status(200).send(allCompanies)
+})
 
 // SHOW
 // GET 
