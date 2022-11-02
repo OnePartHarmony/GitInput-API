@@ -22,7 +22,7 @@ router.get('/reviews/:companyId', (req, res, next) => {
 ////POST route to CREATE review//////////
 router.post("/reviews", requireToken, (req,res,next) => {
     Review.create(req.body.review)
-        .then(res.sendStatus(201))
+        .then(res.sendStatus(204))
         .catch(next)
 })
 
