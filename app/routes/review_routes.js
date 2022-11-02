@@ -6,6 +6,8 @@ const passport = require('passport')
 const requireToken = passport.authenticate('bearer', { session: false })
 
 const router = express.Router()
+const customErrors = require('../../lib/custom_errors')
+const handle404 = customErrors.handle404
 
 
 ///////GET route to INDEX reviews by company//////
@@ -24,6 +26,14 @@ router.post("/reviews", requireToken, (req,res,next) => {
     Review.create(req.body.review)
         .then(res.sendStatus(204))
         .catch(next)
+})
+
+router.get('/reviews/show/:id', (req, res, next) => {
+	Review.findById(req.params.id)
+        .populate("owner", "username")
+		.then(handle404)
+		.then((review) => res.status(200).json({ review: review}))
+		.catch(next)
 })
 
 
