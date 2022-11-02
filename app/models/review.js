@@ -20,6 +20,7 @@ const reviewSchema = new mongoose.Schema(
         startingSalary: {
             type: Number
         },
+		comments: [],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'
