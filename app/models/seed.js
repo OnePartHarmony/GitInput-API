@@ -154,10 +154,10 @@ const startCompanies = [
         description: "Lowe's Companies, Inc., often shortened to Lowe's, is an American retail company specializing in home improvement."
     },
     {
-        name: "Bank Of America",
-        logo: "https://logo.clearbit.com/bankofamerica.com",
-        domain: "Bankofamerica.com",
-        description: "What would you like the power to do? For you and your family, your business and your community. At Bank of America, our purpose is to help make financial lives better through the power of every connection."
+        name: "Samsung",
+        logo:  "https://logo.clearbit.com/samsung.com",
+        domain:  "samsung.com",
+        description: "Samsung Electronics Co., Ltd. is a South Korean multinational electronics corporation headquartered in Yeongtong-gu, Suwon, South Korea. It is the pinnacle of the Samsung chaebol, accounting for 70% of the group's revenue in 2012."
     },
     {
         name: "Prudential Financial",
