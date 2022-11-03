@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const commentSchema = require('./comment')
 
 const reviewSchema = new mongoose.Schema(
 	{
@@ -20,7 +21,7 @@ const reviewSchema = new mongoose.Schema(
         startingSalary: {
             type: Number
         },
-		comments: [],
+		comments: [commentSchema],
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'
