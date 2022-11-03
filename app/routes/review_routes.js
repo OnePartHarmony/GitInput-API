@@ -31,6 +31,7 @@ router.get('/reviews/show/:id', (req, res, next) => {
 	Review.findById(req.params.id)
         .populate("owner")
         .populate("comments.author")
+        .populate("company")
 		.then(handle404)
 		.then((review) => res.status(200).json({ review: review}))
 		.catch(next)
