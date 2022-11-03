@@ -1,4 +1,6 @@
 const mongoose = require('mongoose')
+const commentSchema = require('./comment')
+
 
 const reviewSchema = new mongoose.Schema(
 	{
@@ -15,7 +17,7 @@ const reviewSchema = new mongoose.Schema(
 		},
         startingPosition: {
             type: String,
-		enum: ['Intern', 'Junior', 'Senior', 'Manager']
+		enum: ['Intern', 'Junior', 'Senior', 'Management']
         },
         startingSalary: {
             type: Number
@@ -28,6 +30,7 @@ const reviewSchema = new mongoose.Schema(
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Company'
 		},
+		comments: [commentSchema]
 	},
 )
 

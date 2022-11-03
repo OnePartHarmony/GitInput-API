@@ -28,12 +28,10 @@ router.get('/companies', (req, res, next) => {
 		.catch(next)
 })
 
-//SORT
-// GET, find({}).sort({ name: 1 })
 
 //SEARCH
 // POST
-router.post('/companies', requireToken, async (req, res, next) => {
+router.post('/companies/search', requireToken, async (req, res, next) => {
 	//create query string, this is what you pass to the route
 	const queryString = req.body.queryString
 	//split query string into pieces, getting rid of spaces
@@ -51,29 +49,9 @@ router.post('/companies', requireToken, async (req, res, next) => {
 	res.status(200).send(allCompanies)
 })
 
-// SHOW
-// GET 
-router.get('/companies/:id', (req, res, next) => {
-	Company.findById(req.params.id)
-		.then(handle404)
-		.then((company) => res.status(200).json({ company: company}))
-
-		.catch(next)
-})
-
-// CREATE
-// POST 
-router.post('/companies', requireToken, (req, res, next) => {
-	req.body.company.owner = req.user.id
 
 
-	Company.create(req.body.company)
-		.then((company) => {
-			res.status(201).json({ company: company})
-		})
 
-		.catch(next)
-})
 
 // UPDATE
 // PATCH 

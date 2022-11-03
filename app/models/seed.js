@@ -3,18 +3,14 @@ const mongoose = require('mongoose')
 const database = require('../../config/db')
 mongoose.connect(database, {useNewUrlParser: true})
 const Company = require('./company')
+const Review = require('./review')
 
 const db = mongoose.connection
 
 
 
 const startCompanies = [
-    {
-        name: 'Walmart',
-        logo: 'https://logo.clearbit.com/walmart.com',
-        domain: 'walmart.com',
-        description: 'Walmart Inc. is an American multinational retail corporation that operates a chain of hypermarkets, discount department stores, and grocery stores from the United States, headquartered in Bentonville, Arkansas.'
-    },
+
     {
         name: 'Amazon',
         logo: 'https://logo.clearbit.com/amazon.com',
@@ -154,10 +150,10 @@ const startCompanies = [
         description: "Lowe's Companies, Inc., often shortened to Lowe's, is an American retail company specializing in home improvement."
     },
     {
-        name: "Bank Of America",
-        logo: "https://logo.clearbit.com/bankofamerica.com",
-        domain: "Bankofamerica.com",
-        description: "What would you like the power to do? For you and your family, your business and your community. At Bank of America, our purpose is to help make financial lives better through the power of every connection."
+        name: "Samsung",
+        logo:  "https://logo.clearbit.com/samsung.com",
+        domain:  "samsung.com",
+        description: "Samsung Electronics Co., Ltd. is a South Korean multinational electronics corporation headquartered in Yeongtong-gu, Suwon, South Korea. It is the pinnacle of the Samsung chaebol, accounting for 70% of the group's revenue in 2012."
     },
     {
         name: "Prudential Financial",
@@ -377,6 +373,12 @@ const startCompanies = [
         description: "Autodesk, Inc. is an American multinational software corporation that makes software products and services for the architecture, engineering, construction, manufacturing, media, education, and entertainment industries. Autodesk is headquartered in San Francisco, California, and has offices worldwide."
     },
     {
+        name: 'Walmart',
+        logo: 'https://logo.clearbit.com/walmart.com',
+        domain: 'walmart.com',
+        description: 'Walmart Inc. is an American multinational retail corporation that operates a chain of hypermarkets, discount department stores, and grocery stores from the United States, headquartered in Bentonville, Arkansas.'
+    },    
+    {
         name: "Synopsys",
         logo: "https://logo.clearbit.com/synopsys.com",
         domain: "synopsis.com",
@@ -403,12 +405,41 @@ const startCompanies = [
 ]
 
 db.on('open', () => {
-  Company.deleteMany()
+  Promise.all([Company.deleteMany(), Review.deleteMany()])
     .then(() => {
       Company.create(startCompanies)
-        .then(data => {
-            console.log(data)
-            db.close()
+        .then(companies => {
+            Review.create([
+                {
+                    title: "Not Bad",
+                    content: "This is a pretty good place to work.  I am treated with respect.  I wish I received more feedback on my code",
+                    generalRating: 4,
+                    startingPosition: 'Junior',
+                    startingSalary: 70000,
+                    company: companies[0].id
+                },
+                {
+                    title: "I Love It Here!",
+                    content: "I have been here for ten years and I never plan on leaving.  This company is my family.",
+                    generalRating: 5,
+                    startingPosition: 'Senior',
+                    startingSalary: 150000,
+                    company: companies[0].id
+                },
+                {
+                    title: "Not What I Expected",
+                    content: "I thought I'd be doing more coding, but I'm just taking coffee orders.",
+                    generalRating: 2,
+                    startingPosition: 'Intern',
+                    startingSalary: 40000,
+                    company: companies[0].id
+                },
+            ])
+            .then(() => db.close())
+            .catch(err => {
+                console.error(err)
+                db.close()
+              })
         })
         .catch(err => {
           console.error(err)
