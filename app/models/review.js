@@ -17,7 +17,7 @@ const reviewSchema = new mongoose.Schema(
 		},
         startingPosition: {
             type: String,
-		enum: ['Intern', 'Junior', 'Senior', 'Manager']
+		enum: ['Intern', 'Junior', 'Senior', 'Management']
         },
         startingSalary: {
             type: Number
