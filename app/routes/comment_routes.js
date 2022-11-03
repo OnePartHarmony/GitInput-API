@@ -35,11 +35,11 @@ const Comment = require("../models/comment")
 // POST
 router.post("/comments/:reviewId", requireToken, (req,res,next) => {
     const reviewId = req.params.reviewId
-    console.log(reviewId.slice(0))
+//    console.log(reviewId.slice(0))
     Review.findById(reviewId)
         .then(review => {
             review.comments.push(req.body)
-            console.log(review.comments)
+//            console.log(review.comments)
             return review.save()
         })
         .then(res.sendStatus(204))
