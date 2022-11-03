@@ -79,9 +79,9 @@ const startCompanies = [
     },
     {
         name: 'Cigna',
-        logo: 'https://logo.clearbit.com/homedepot.com',
+        logo: 'https://logo.clearbit.com/cigna.com',
         domain: 'cigna.com',
-        description: 'Walgreen Company, d/b/a Walgreens, is an American company that operates the second-largest pharmacy store chain in the United States behind CVS Health.'
+        description: 'Cigna is an American multinational managed healthcare and insurance company based in Bloomfield, Connecticut.'
     },
     {
         name: "General Motors",
