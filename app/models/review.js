@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
-
 const commentSchema = require('./comment')
-const User = require('./user')
+
 
 const reviewSchema = new mongoose.Schema(
 	{
