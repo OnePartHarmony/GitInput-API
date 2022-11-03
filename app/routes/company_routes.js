@@ -28,6 +28,9 @@ router.get('/companies', (req, res, next) => {
 		.catch(next)
 })
 
+//SORT
+// GET, find({}).sort({ name: 1 })
+
 //SEARCH
 // POST
 router.post('/companies', requireToken, async (req, res, next) => {
