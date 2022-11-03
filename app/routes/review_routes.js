@@ -14,9 +14,9 @@ const handle404 = customErrors.handle404
 ///////GET route to INDEX reviews by company//////
 router.get('/reviews/:companyId', (req, res, next) => {
     const companyId = req.params.companyId
-    Review.find({company: companyId})
+    Review.find({company: companyId}).sort({generalRating: -1})
         .then(reviews => {
-            res.status(200).json({ reviews: reviews })
+            res.status(200).json({ reviews: reviews })     
         })
         .catch(next)
 })

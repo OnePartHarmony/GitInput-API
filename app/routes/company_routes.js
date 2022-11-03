@@ -21,7 +21,7 @@ const router = express.Router()
 // INDEX
 // GET /companies
 router.get('/companies', (req, res, next) => {
-	Company.find()
+	Company.find().sort({name: 1}).limit(1000)
 		.then((companies) => {
 			res.status(200).json({ companies: companies })
 		})
