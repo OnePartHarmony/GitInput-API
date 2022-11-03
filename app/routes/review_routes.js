@@ -38,27 +38,19 @@ router.get('/reviews/show/:id', (req, res, next) => {
 		.catch(next)
 })
 
+// Update
+router.patch('/reviews/:companyId/:revId', requireToken, (req, res, next) => {
+    delete req.body.review.owner
 
-// all users can post reviews
-// router.post("reviews/:companyId", (req, res) => {
-//     const companyId = req.params.companyId
+    Review.findById(req.params.id)
+    .then(handle404)
+    .then(review => {
+        return review.updateOne(req.body.review)
+    })
+    .then(() => res.sendStatus(204))
+    .catch(next)
 
-//     Company.findById(companyId)
-//         .then(company => {
-//             // push the review into the company.reviews array
-//             company.comments.push(req.body)
-//             // we need to save the company
-//             // averageRating()
-//             return company.save()
-//         })
-//         .then(company => {
-//             res.redirect(`/companies/${company.id}`)
-//         })
-//         //  --> send some kind of error depending on what went wrong
-//         .catch(err => res.redirect(`/error?error=${err}`))
-// })
-
-
+})
 
 // DELETE
 // router.delete('/delete/:companyId/:revId', (req, res) => {
