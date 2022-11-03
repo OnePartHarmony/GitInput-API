@@ -71,10 +71,6 @@ router.post('/companies/search', requireToken, async (req, res, next) => {
 	res.status(200).send(allCompanies)
 })
 
-
-
-
-
 // UPDATE
 // PATCH 
 router.patch('/companies/:id', requireToken, removeBlanks, (req, res, next) => {
