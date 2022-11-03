@@ -39,12 +39,14 @@ router.get('/reviews/show/:id', (req, res, next) => {
 })
 
 // Update
-router.patch('/reviews/:companyId/:revId', requireToken, (req, res, next) => {
+router.patch('/reviews/:revId', requireToken, (req, res, next) => {
     delete req.body.review.owner
+    delete req.body.review.comments
 
-    Review.findById(req.params.id)
+    Review.findById(req.params.revId)
     .then(handle404)
     .then(review => {
+        requireOwnership(req, review)
         return review.updateOne(req.body.review)
     })
     .then(() => res.sendStatus(204))
