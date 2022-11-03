@@ -28,6 +28,28 @@ router.get('/companies', (req, res, next) => {
 		.catch(next)
 })
 
+// SHOW
+// GET 
+router.get('/companies/:id', (req, res, next) => {
+	Company.findById(req.params.id)
+		.then(handle404)
+		.then((company) => res.status(200).json({ company: company }))
+
+		.catch(next)
+})
+
+// CREATE
+// POST 
+router.post('/companies', requireToken, (req, res, next) => {
+	req.body.company.owner = req.user.id
+
+	Company.create(req.body.company)
+		.then((company) => {
+			res.status(201).json({ company: company })
+		})
+
+		.catch(next)
+})
 
 //SEARCH
 // POST
