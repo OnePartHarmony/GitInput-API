@@ -38,7 +38,7 @@ router.get('/reviews/show/:id', (req, res, next) => {
 })
 
 // Update
-router.patch('/reviews/:companyId/:revId', requireToken, removeBlanks, (req, res, next) => {
+router.patch('/reviews/:companyId/:revId', requireToken, (req, res, next) => {
     delete req.body.review.owner
 
     Review.findById(req.params.id)
