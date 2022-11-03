@@ -7,7 +7,6 @@ const requireToken = passport.authenticate('bearer', { session: false })
 
 const router = express.Router()
 const customErrors = require('../../lib/custom_errors')
-const { db } = require('../models/company')
 const requireOwnership = customErrors.requireOwnership
 const handle404 = customErrors.handle404
 
