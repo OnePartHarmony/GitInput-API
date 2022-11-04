@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "node app/models/seed.js"
+    "seed": "node app/models/seed.js",
+    "depseed": "node app/models/seedDeploy.js"
   },
   "author": "We Didn't Start the Fire",
   "license": "ISC",
@@ -21,6 +22,7 @@
     "mongodb": "^4.11.0",
     "mongoose": "^6.7.0",
     "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.20",
     "passport": "^0.6.0",
     "passport-http-bearer": "^1.0.1"
   }
