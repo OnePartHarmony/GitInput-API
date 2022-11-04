@@ -54,31 +54,6 @@ router.patch('/reviews/:revId', requireToken, (req, res, next) => {
 
 })
 
-// DELETE
-// router.delete('/delete/:companyId/:revId', (req, res) => {
-
-//     const companyId = req.params.companyId 
-//     const revId = req.params.revId
-//     Company.findById(companyId)
-//         .then(company => {
-//             const theReview = company.reviews.id(revId)
-//             console.log('this is the review that was found', theReview)
-//             if (req.session.loggedIn) {
-//                 if (theReview.author == req.session.userId) {
-//                     theReview.remove()
-//                     company.save()
-//                     res.redirect(`/companies/${company.id}`)
-//                     return company.save()
-//                 } else {
-//                     const err = 'you%20are%20not%20authorized%20for%20this%20action'
-//                     res.redirect(`/error?error=${err}`)
-//                 }
-//             }
-//         })
-//         .catch(err => res.redirect(`/error?error=${err}`))
-
-// })
-
 router.delete('/reviews/:reviewId', requireToken, (req,res,next) => {
     Review.findById(req.params.reviewId)
         .then(handle404)

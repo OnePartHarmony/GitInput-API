@@ -13,25 +13,6 @@ const router = express.Router()
 const Comment = require("../models/comment")
 
 
-// router.post("/comments/:reviewId", (req, res) => {
-//     const companyId = req.params.companyId
-
-//     if (req.session.loggedIn) {
-//         req.body.author = req.session.userId
-//     } else {
-//         res.sendStatus(401)
-//     }
-//     Product.findById(companyId)
-//         .then(company => {
-//             company.comments.push(req.body)
-//             return company.save()
-//         })
-//         .then(company => {
-//             res.redirect(`/companies/${company.id}`)
-//         })
-//         .catch(err => res.redirect(`/error?error=${err}`))
-// })
-
 // POST
 router.post("/comments/:reviewId", requireToken, (req,res,next) => {
     const reviewId = req.params.reviewId
