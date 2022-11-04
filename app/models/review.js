@@ -17,7 +17,7 @@ const reviewSchema = new mongoose.Schema(
 		},
         startingPosition: {
             type: String,
-		enum: ['Intern', 'Junior', 'Senior', 'Manager']
+		enum: ['Intern', 'Junior', 'Senior', 'Management']
         },
         startingSalary: {
             type: Number
@@ -32,6 +32,9 @@ const reviewSchema = new mongoose.Schema(
 		},
 		comments: [commentSchema]
 	},
+	{
+		timestamps: true,
+	}
 )
 
 module.exports = mongoose.model('Review', reviewSchema)
