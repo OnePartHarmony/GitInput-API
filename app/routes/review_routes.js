@@ -31,7 +31,7 @@ router.post("/reviews", requireToken, (req,res,next) => {
 router.get('/reviews/show/:id', (req, res, next) => {
 	Review.findById(req.params.id)
         .populate("owner")
-        .populate("comments.author")
+        .populate("comments.owner")
         .populate("company")
 		.then(handle404)
 		.then((review) => res.status(200).json({ review: review}))
@@ -53,6 +53,7 @@ router.patch('/reviews/:revId', requireToken, (req, res, next) => {
     .catch(next)
 
 })
+
 
 router.delete('/reviews/:reviewId', requireToken, (req,res,next) => {
     Review.findById(req.params.reviewId)
