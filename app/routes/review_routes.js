@@ -14,6 +14,7 @@ const handle404 = customErrors.handle404
 router.get('/reviews/:companyId', (req, res, next) => {
     const companyId = req.params.companyId
     Review.find({company: companyId})
+        .populate("owner")
         .then(reviews => {
             res.status(200).json({ reviews: reviews })
         })
