@@ -5,21 +5,24 @@ const companySchema = new mongoose.Schema(
 	{
 		name: {
 			type: String,
-			required: true,
+			required: true
 		},
 		description: {
 			type: String,
-			required: true,
+			required: true
 		},
 		logo: {
-			type: String,
+			type: String
 		},
         domain: {
             type: String,
             required: true
         },
 		averageRating: {
-			type: Number,
+			type: Number
+		},
+		numberOfReviews: {
+			type: Number
 		},
 		owner: {
 			type: mongoose.Schema.Types.ObjectId,
