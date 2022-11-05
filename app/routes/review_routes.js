@@ -14,11 +14,10 @@ const handle404 = customErrors.handle404
 ///////GET route to INDEX reviews by company//////
 router.get('/reviews/:companyId', (req, res, next) => {
     const companyId = req.params.companyId
-
-    Review.find({company: companyId}).sort({generalRating: -1})
+    Review.find({company: companyId})
         .populate("owner")
-
         .then(reviews => {
+            reviews.sort((a,b) => b.userLikes.length - a.userLikes.length)
             res.status(200).json({ reviews: reviews })     
         })
         .catch(next)
@@ -73,9 +72,14 @@ router.patch('/reviews/like/:reviewId', requireToken, (req,res,next) => {
         .then(handle404)
         .then(review => {
             ///save user id in array of users who have liked the review
-            const userId = req.body.userId           
-            review.userLikes.push(userId)
-            review.save({timestamps: false})
+            const userId = req.body.userId
+            if (review.userLikes.includes(userId)) {
+                return
+            } else {
+                review.userLikes.push(userId)
+                review.save({timestamps: false}) 
+            }
+            
         })
         .finally(res.sendStatus(204))
         .catch(next)
