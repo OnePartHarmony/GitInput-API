@@ -17,20 +17,24 @@ const reviewSchema = new mongoose.Schema(
 		},
         startingPosition: {
             type: String,
-		enum: ['Intern', 'Junior', 'Senior', 'Management']
+			enum: ['Intern', 'Junior', 'Senior', 'Management']
         },
         startingSalary: {
             type: Number
         },
-		owner: {
+		userLikes: [{
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User'
-		},
+			ref: 'User'			
+		}],
+		comments: [commentSchema],		
 		company: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'Company'
 		},
-		comments: [commentSchema]
+		owner: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: 'User'
+		}
 	},
 	{
 		timestamps: true,
