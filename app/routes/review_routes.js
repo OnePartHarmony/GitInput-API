@@ -40,8 +40,9 @@ router.post("/reviews", requireToken, (req,res,next) => {
         .catch(next)
 })
 
-router.get('/reviews/show/:id', (req, res, next) => {
-	Review.findById(req.params.id)
+//GET route to SHOW review
+router.get('/reviews/show/:reviewId', (req, res, next) => {
+	Review.findById(req.params.reviewId)
         .populate("owner")
         .populate("comments.owner")
         .populate("company")
@@ -50,23 +51,53 @@ router.get('/reviews/show/:id', (req, res, next) => {
 		.catch(next)
 })
 
-// Update
-router.patch('/reviews/:revId', requireToken, (req, res, next) => {
+// PATCH route to UPDATE review
+router.patch('/reviews/:reviewId', requireToken, (req, res, next) => {
     delete req.body.review.owner
     delete req.body.review.comments
 
-    Review.findById(req.params.revId)
-    .then(handle404)
-    .then(review => {
-        requireOwnership(req, review)
-        return review.updateOne(req.body.review)
-    })
-    .then(() => res.sendStatus(204))
-    .catch(next)
+    Review.findById(req.params.reviewId)
+        .then(handle404)
+        .then(review => {
+            requireOwnership(req, review)
+            return review.updateOne(req.body.review)
+        })
+        .then(() => res.sendStatus(204))
+        .catch(next)
 
 })
 
+// PATCH route to LIKE review
+router.patch('/reviews/like/:reviewId', requireToken, (req,res,next) => {
+    Review.findById(req.params.reviewId)
+        .then(handle404)
+        .then(review => {
+            ///save user id in array of users who have liked the review
+            const userId = req.body.userId           
+            review.userLikes.push(userId)
+            review.save({timestamps: false})
+        })
+        .finally(res.sendStatus(204))
+        .catch(next)
+})
 
+// PATCH route to UNLIKE review
+router.patch('/reviews/unlike/:reviewId', requireToken, (req,res,next) => {
+    Review.findById(req.params.reviewId)
+        .then(handle404)
+        .then(review => {
+            ///remove user id from array of users who have liked the review
+            const userId = req.body.userId           
+            const userIndex = review.userLikes.findIndex(id => id === userId)
+            review.userLikes.splice(userIndex, 1)
+            review.save({timestamps: false})
+        })
+        .finally(res.sendStatus(204))
+        .catch(next)
+})
+
+
+// DELETE route to DESTROY review
 router.delete('/reviews/:reviewId', requireToken, (req,res,next) => {
     Review.findById(req.params.reviewId)
         .then(handle404)
