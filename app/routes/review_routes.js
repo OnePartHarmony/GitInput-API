@@ -27,6 +27,15 @@ router.get('/reviews/:companyId', (req, res, next) => {
 ////POST route to CREATE review//////////
 router.post("/reviews", requireToken, (req,res,next) => {
     Review.create(req.body.review)
+        .then(review => {
+            Company.findById(review.company)
+                .then(company => {
+                    const totalReviews = company.numberOfReviews ? company.numberOfReviews + 1 : 1
+                    company.numberOfReviews = totalReviews
+                    company.save()
+                })
+                .catch(next)
+        })
         .then(res.sendStatus(204))
         .catch(next)
 })
