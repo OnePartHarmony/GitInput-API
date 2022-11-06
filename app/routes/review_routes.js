@@ -27,10 +27,19 @@ router.get('/reviews/:companyId', (req, res, next) => {
 router.post("/reviews", requireToken, (req,res,next) => {
     Review.create(req.body.review)
         .then(review => {
+        //update average rating of reviewed company
             Company.findById(review.company)
                 .then(company => {
-                    const totalReviews = company.numberOfReviews ? company.numberOfReviews + 1 : 1
-                    company.numberOfReviews = totalReviews
+                    let currentQuantity = company.numberOfReviews
+                    if (currentQuantity && currentQuantity > 0) {
+                        let currentSum = (currentQuantity * company.averageRating) + review.generalRating
+                        company.numberOfReviews = currentQuantity + 1
+                        company.averageRating = currentSum / company.numberOfReviews
+                    } else {
+                 //if no reviews, number is one, average is rating       
+                        company.numberOfReviews = 1
+                        company.averageRating = review.generalRating
+                    }
                     company.save()
                 })
                 .catch(next)
@@ -59,6 +68,14 @@ router.patch('/reviews/:reviewId', requireToken, (req, res, next) => {
         .then(handle404)
         .then(review => {
             requireOwnership(req, review)
+        //update company rating in case review has new rating
+            Company.findById(review.company)
+                .then(company => {
+                    let minusOld = (company.numberOfReviews * company.averageRating) - req.params.currentRating
+                    company.averageRating = (minusOld + review.generalRating) / company.numberOfReviews
+                    company.save()
+                })
+                .catch(next)
             return review.updateOne(req.body.review)
         })
         .then(() => res.sendStatus(204))
@@ -107,6 +124,16 @@ router.delete('/reviews/:reviewId', requireToken, (req,res,next) => {
         .then(handle404)
         .then(review => {
             requireOwnership(req, review)
+        //remove review from count and average in company
+            Company.findById(review.company)
+                .then(company => {
+                    let currentQuantity = company.numberOfReviews
+                    let currentSum = (currentQuantity * company.averageRating) - review.generalRating
+                    company.numberOfReviews = currentQuantity - 1
+                    company.averageRating = currentSum / company.numberOfReviews
+                    company.save()
+                })
+                .catch(next)
             review.deleteOne()
             res.sendStatus(204)
         })
