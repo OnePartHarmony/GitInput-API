@@ -18,6 +18,7 @@ const startCompanies = [
         logo: 'https://logo.clearbit.com/amazon.com',
         domain: 'amazon.com',
         description: 'Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, online advertising, digital streaming, and artificial intelligence.',
+        averageRating: 3.5,
         numberOfReviews: 6
     },
     {
@@ -31,6 +32,7 @@ const startCompanies = [
         logo: "https://logo.clearbit.com/generalassemb.ly",
         domain: "generalassemb.ly",
         description: "General Assembly is a private, for-profit education organization founded by CEO Jake Schwartz, Adam Pritzker, Matthew Brimer, and Brad Hargreaves in early 2011.",
+        averageRating: 2,
         numberOfReviews: 2
     },
     {
@@ -419,7 +421,7 @@ db.on('open', async() => {
                             hashedPassword: hashedPassword
                         },
                         {
-                            username: "timmLovesDonuts",
+                            username: "DonutLoverTimmmm",
                             hashedPassword: hashedPassword
                         },
                         {
@@ -506,7 +508,7 @@ db.on('open', async() => {
                             {
                                 title: "This Used to be Fun",
                                 content: "I loved teaching at GA until my peeps in the back actually started listening.  After this, all I can say is run.  Run away.",
-                                generalRating: 3,
+                                generalRating: 4,
                                 startingPosition: 'Senior',
                                 startingSalary: 90000000,
                                 userLikes: [users[1].id],

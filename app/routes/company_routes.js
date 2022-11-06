@@ -51,25 +51,6 @@ router.post('/companies', requireToken, (req, res, next) => {
 		.catch(next)
 })
 
-// //SEARCH
-// // POST
-// router.post('/companies/search', requireToken, async (req, res, next) => {
-// 	//create query string, this is what you pass to the route
-// 	const queryString = req.body.queryString
-// 	//split query string into pieces, getting rid of spaces
-// 	const queryStrings = queryString.split(" ")
-// 	//make all query pieces into an array
-// 	allQueries = []
-// 	//run a for-each loop which searches each individual piece of the array
-// 	//the search returns anything that *contains* the element
-// 	queryStrings.forEach(element => {
-// 		allQueries.push({name: {$regex : String(element)}})
-// 	})
-// 	const allCompanies = await Company.find({$or : allQueries})
-// 	//errors and the 'return' section of the route
-// 	if (!allCompanies || allCompanies.length === 0) res.status(400).send({error : "No company found"})
-// 	res.status(200).send(allCompanies)
-// })
 
 // UPDATE
 // PATCH 
