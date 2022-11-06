@@ -63,6 +63,7 @@ router.get('/reviews/show/:reviewId', (req, res, next) => {
 router.patch('/reviews/:reviewId', requireToken, (req, res, next) => {
     delete req.body.review.owner
     delete req.body.review.comments
+    delete req.body.review.company
 
     Review.findById(req.params.reviewId)
         .then(handle404)
@@ -71,8 +72,9 @@ router.patch('/reviews/:reviewId', requireToken, (req, res, next) => {
         //update company rating in case review has new rating
             Company.findById(review.company)
                 .then(company => {
-                    let minusOld = (company.numberOfReviews * company.averageRating) - req.params.currentRating
-                    company.averageRating = (minusOld + review.generalRating) / company.numberOfReviews
+                    let totalReviews = company.numberOfReviews
+                    let minusOld = (totalReviews * company.averageRating) - review.generalRating
+                    company.averageRating = (minusOld + req.body.review.generalRating) / totalReviews
                     company.save()
                 })
                 .catch(next)
