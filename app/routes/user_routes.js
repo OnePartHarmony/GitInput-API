@@ -22,7 +22,6 @@ const router = express.Router()
 // SIGN UP
 // POST /sign-up
 router.post('/sign-up', (req, res, next) => {
-	console.log('inside of sign-up post', req.body.credentials)
 	Promise.resolve(req.body.credentials)
 		.then((credentials) => {
 			if (
@@ -50,7 +49,6 @@ router.post('/sign-up', (req, res, next) => {
 router.post('/sign-in', (req, res, next) => {
 	const pw = req.body.credentials.password
 	let user
-
 	User.findOne({ username: req.body.credentials.username })
 		.then((record) => {
 			if (!record) {

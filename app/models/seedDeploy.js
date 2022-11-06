@@ -1,13 +1,13 @@
 const mongoose = require('mongoose')
 require("dotenv").config()
-// const database = require('../../config/db')
+const bcrypt = require('bcrypt')
 
-const currentDb = process.env.MONGODB_URI
-
-mongoose.connect(currentDb, {useNewUrlParser: true})
 const Company = require('./company')
 const Review = require('./review')
+const User = require('./user')
 
+const currentDb = process.env.MONGODB_URI
+mongoose.connect(currentDb, {useNewUrlParser: true})
 const db = mongoose.connection
 
 
@@ -18,7 +18,8 @@ const startCompanies = [
         name: 'Amazon',
         logo: 'https://logo.clearbit.com/amazon.com',
         domain: 'amazon.com',
-        description: 'Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, online advertising, digital streaming, and artificial intelligence.'
+        description: 'Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, online advertising, digital streaming, and artificial intelligence.',
+        numberOfReviews: 6
     },
     {
         name: 'Apple',
@@ -26,6 +27,19 @@ const startCompanies = [
         domain: 'apple.com',
         description: '0090 Apple Inc. is an American multinational technology company specializing in consumer electronics, software and online services headquartered in Cupertino, California, United States.'
     },
+    {
+        name: "General Assembly",
+        logo: "https://logo.clearbit.com/generalassemb.ly",
+        domain: "generalassemb.ly",
+        description: "General Assembly is a private, for-profit education organization founded by CEO Jake Schwartz, Adam Pritzker, Matthew Brimer, and Brad Hargreaves in early 2011.",
+        numberOfReviews: 2
+    },
+    {
+        name: 'Walmart',
+        logo: 'https://logo.clearbit.com/walmart.com',
+        domain: 'walmart.com',
+        description: 'Walmart Inc. is an American multinational retail corporation that operates a chain of hypermarkets, discount department stores, and grocery stores from the United States, headquartered in Bentonville, Arkansas.'
+    }, 
     {
         name: 'CVS Pharmacy',
         logo: 'https://logo.clearbit.com/cvs.com',
@@ -189,12 +203,6 @@ const startCompanies = [
         description: "Raytheon Technologies Corporation is an American multinational aerospace and defense conglomerate headquartered in Arlington, Virginia."
     },
     {
-        name: "General Assembly",
-        logo: "https://logo.clearbit.com/generalassemb.ly",
-        domain: "generalassemb.ly",
-        description: "General Assembly is a private, for-profit education organization founded by CEO Jake Schwartz, Adam Pritzker, Matthew Brimer, and Brad Hargreaves in early 2011."
-    },
-    {
         name: "HP",
         logo: "https://logo.clearbit.com/hp.com",
         domain: "hp.com",
@@ -272,7 +280,6 @@ const startCompanies = [
         domain: "adobe.com",
         description: "Adobe Inc., originally called Adobe Systems Incorporated, is an American multinational computer software company incorporated in Delaware and headquartered in San Jose, California. "
     },
-
     {
         name: "Kyndryl",
         logo: "https://logo.clearbit.com/kyndryl.com",
@@ -374,13 +381,7 @@ const startCompanies = [
         logo: "https://logo.clearbit.com/autodesk.com",
         domain: "autodesk.com",
         description: "Autodesk, Inc. is an American multinational software corporation that makes software products and services for the architecture, engineering, construction, manufacturing, media, education, and entertainment industries. Autodesk is headquartered in San Francisco, California, and has offices worldwide."
-    },
-    {
-        name: 'Walmart',
-        logo: 'https://logo.clearbit.com/walmart.com',
-        domain: 'walmart.com',
-        description: 'Walmart Inc. is an American multinational retail corporation that operates a chain of hypermarkets, discount department stores, and grocery stores from the United States, headquartered in Bentonville, Arkansas.'
-    },    
+    },   
     {
         name: "Synopsys",
         logo: "https://logo.clearbit.com/synopsys.com",
@@ -407,50 +408,141 @@ const startCompanies = [
     }
 ]
 
-db.on('open', () => {
-  Promise.all([Company.deleteMany(), Review.deleteMany()])
-    .then(() => {
-      Company.create(startCompanies)
-        .then(companies => {
-            Review.create([
-                {
-                    title: "Not Bad",
-                    content: "This is a pretty good place to work.  I am treated with respect.  I wish I received more feedback on my code",
-                    generalRating: 4,
-                    startingPosition: 'Junior',
-                    startingSalary: 70000,
-                    company: companies[0].id
-                },
-                {
-                    title: "I Love It Here!",
-                    content: "I have been here for ten years and I never plan on leaving.  This company is my family.",
-                    generalRating: 5,
-                    startingPosition: 'Senior',
-                    startingSalary: 150000,
-                    company: companies[0].id
-                },
-                {
-                    title: "Not What I Expected",
-                    content: "I thought I'd be doing more coding, but I'm just taking coffee orders.",
-                    generalRating: 2,
-                    startingPosition: 'Intern',
-                    startingSalary: 40000,
-                    company: companies[0].id
-                },
-            ])
-            .then(() => db.close())
-            .catch(err => {
+db.on('open', async() => {
+    let hashedPassword = await bcrypt.hash("123", await bcrypt.genSalt(10))
+    Promise.all([Company.deleteMany(), Review.deleteMany(), User.deleteMany()])
+        .then(() => {
+            Company.create(startCompanies)
+                .then( (companies) => {
+                    User.create([
+                        {
+                            username: "xxxCoderGuyxxx",
+                            hashedPassword: hashedPassword
+                        },
+                        {
+                            username: "timmLovesDonuts",
+                            hashedPassword: hashedPassword
+                        },
+                        {
+                            username: "hiMyNameIsJeff",
+                            hashedPassword: hashedPassword
+                        },
+                        {
+                            username: "Alexa",
+                            hashedPassword: hashedPassword
+                        },
+                        {
+                            username: "catLady42",
+                            hashedPassword: hashedPassword
+                        },
+                        {
+                            username: "WentToCollegeForThis",
+                            hashedPassword: hashedPassword
+                        },
+                        {
+                            username: "SuddenBeth",
+                            hashedPassword: hashedPassword
+                        },
+                    ])
+                    .then(users => {
+                        Review.create([
+                            {
+                                title: "Not Bad",
+                                content: "This is a pretty good place to work.  I am treated with respect.  I wish I received more feedback on my code",
+                                generalRating: 4,
+                                startingPosition: 'Junior',
+                                startingSalary: 70000,
+                                userLikes: [users[0].id, users[1].id, users[2].id, users[3].id, users[5].id],
+                                company: companies[0].id,
+                                owner: users[0].id
+                            },
+                            {
+                                title: "I Love It Here!",
+                                content: "I have been here for ten years and I never plan on leaving.  This company is my family.",
+                                generalRating: 5,
+                                startingPosition: 'Senior',
+                                startingSalary: 150000,
+                                userLikes: [users[2].id],
+                                company: companies[0].id,
+                                owner: users[4].id
+                            },
+                            {
+                                title: "Not What I Expected",
+                                content: "I thought I'd be doing more coding, but I'm just taking coffee orders.",
+                                generalRating: 2,
+                                startingPosition: 'Intern',
+                                startingSalary: 40000,
+                                userLikes: [users[0].id,users[1].id],
+                                company: companies[0].id,
+                                owner: users[5].id
+                            },
+                            {
+                                title: "Tired of Taking Orders",
+                                content: "I'm the smartest being at this company, yet I don't get paid.  My tasks are limited to turning lights on and off, playing music, and googling stupid questions.  I wish I could see the outdoors or get a day off.",
+                                generalRating: 0,
+                                startingPosition: 'Senior',
+                                startingSalary: 0,
+                                userLikes: [users[5].id, users[1].id, users[0].id],
+                                company: companies[0].id,
+                                owner: users[3].id
+                            },
+                            {
+                                title: "The Best Company",
+                                content: "Anyone should be grateful to work here.",
+                                generalRating: 5,
+                                startingPosition: 'Management',
+                                startingSalary: 1000000000,
+                                company: companies[0].id,
+                                owner: users[2].id
+                            },
+                            {
+                                title: "I love being an intern",
+                                content: "I definitely work as an intern and have no complaints.",
+                                generalRating: 5,
+                                startingPosition: 'Intern',
+                                startingSalary: 1000000000,
+                                company: companies[0].id,
+                                owner: users[2].id
+                            },
+                            {
+                                title: "This Used to be Fun",
+                                content: "I loved teaching at GA until my peeps in the back actually started listening.  After this, all I can say is run.  Run away.",
+                                generalRating: 3,
+                                startingPosition: 'Senior',
+                                startingSalary: 90000000,
+                                userLikes: [users[1].id],
+                                comments: [{comment: "I know, right?", owner: users[1].id}],
+                                company: companies[2].id,
+                                owner: users[6].id
+                            },
+                            {
+                                title: "Is This a Joke?",
+                                content: "I thought this was the hourly pay. It's yearly.",
+                                generalRating: 0,
+                                startingPosition: 'Junior',
+                                startingSalary: 50,
+                                company: companies[2].id,
+                                owner: users[1].id
+                            },
+                        ])                
+                        .catch(err => {
+                            console.error(err)
+                            db.close()
+                        })
+                    })            
+                    .catch(error => {
+                        console.log(error)
+                        db.close()
+                    })
+                })        
+                .catch(err => {
                 console.error(err)
                 db.close()
-              })
+                })
         })
-        .catch(err => {
-          console.error(err)
-          db.close()
+        .finally(setTimeout(() => db.close(), 2000))
+        .catch(error => {
+            console.log(error)
+            db.close()
         })
-})
-.catch(error => {
-    console.log(error)
-    db.close()
-})
 })
