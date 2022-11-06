@@ -450,7 +450,7 @@ db.on('open', async() => {
                         Review.create([
                             {
                                 title: "Not Bad",
-                                content: "This is a pretty good place to work.  I am treated with respect.  I wish I received more feedback on my code",
+                                content: "This is a pretty good place to work.  I am treated with respect.  I wish I received more feedback on my code.",
                                 generalRating: 4,
                                 startingPosition: 'Junior',
                                 startingSalary: 70000,
