@@ -132,7 +132,11 @@ router.delete('/reviews/:reviewId', requireToken, (req,res,next) => {
                     let currentQuantity = company.numberOfReviews
                     let currentSum = (currentQuantity * company.averageRating) - review.generalRating
                     company.numberOfReviews = currentQuantity - 1
-                    company.averageRating = currentSum / company.numberOfReviews
+                    if (company.numberOfReviews === 0) {
+                        company.averageRating = null
+                    } else {
+                        company.averageRating = currentSum / company.numberOfReviews  
+                    }                    
                     company.save()
                 })
                 .catch(next)
