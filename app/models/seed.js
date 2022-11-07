@@ -78,12 +78,6 @@ const startCompanies = [
         description: 'McKesson Corporation is an American company distributing pharmaceuticals and providing health information technology, medical supplies, and care management tools.'
     },
     {
-        name: 'AmerisourceBergen Corporation',
-        logo: 'https://logo.clearbit.com/amerisourcebergen.com',
-        domain: 'amerisourcebergen.com',
-        description: 'AmerisourceBergen Corporation is an American drug wholesale company that was formed by the merger of Bergen Brunswig and AmeriSource in 2001.'
-    },
-    {
         name: 'Microsoft',
         logo: 'https://logo.clearbit.com/microsoft.com',
         domain: 'microsoft.com',
