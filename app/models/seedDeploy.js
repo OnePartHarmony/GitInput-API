@@ -455,6 +455,12 @@ db.on('open', async() => {
                                 startingPosition: 'Junior',
                                 startingSalary: 70000,
                                 userLikes: [users[0].id, users[1].id, users[2].id, users[3].id, users[5].id],
+                                comments: [
+                                    {comment: "It's just so great here.  I don't know why you would say something so negative.", owner: users[4].id},
+                                    {comment: "lolololol", owner: users[2].id},
+                                    {comment: "Weird, Jeff.  Totally unprofessional.", owner: users[0].id},
+                                    {comment: "Be happy you get to write any code at all.", owner: users[5].id}
+                                ],
                                 company: companies[0].id,
                                 owner: users[0].id
                             },
