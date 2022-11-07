@@ -33,6 +33,7 @@ router.post("/reviews", requireToken, (req,res,next) => {
             Company.findById(review.company)
                 .then(company => {
                     let currentQuantity = company.numberOfReviews
+                    // Good practice when doing some logic that might not be human readalbe right off the bat is to leave a comment above to explain what it's doing
                     if (currentQuantity && currentQuantity > 0) {
                         let currentSum = (currentQuantity * company.averageRating) + review.generalRating
                         company.numberOfReviews = currentQuantity + 1
@@ -75,6 +76,7 @@ router.patch('/reviews/:reviewId', requireToken, (req, res, next) => {
             Company.findById(review.company)
                 .then(company => {
                     let totalReviews = company.numberOfReviews
+                    // Same comment as above with leaving a comment for things that might not be human readable
                     let minusOld = (totalReviews * company.averageRating) - review.generalRating
                     company.averageRating = (minusOld + req.body.review.generalRating) / totalReviews
                     company.save()
@@ -132,6 +134,7 @@ router.delete('/reviews/:reviewId', requireToken, (req,res,next) => {
             Company.findById(review.company)
                 .then(company => {
                     let currentQuantity = company.numberOfReviews
+                    // Same comment as above
                     let currentSum = (currentQuantity * company.averageRating) - review.generalRating
                     company.numberOfReviews = currentQuantity - 1
                     if (company.numberOfReviews === 0) {
