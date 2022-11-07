@@ -2,6 +2,7 @@ const express = require('express')
 const passport = require('passport')
 
 const Company = require('../models/company')
+const Review = require('../models/review')
 
 const customErrors = require('../../lib/custom_errors')
 
@@ -43,7 +44,6 @@ router.post('/companies', requireToken, (req, res, next) => {
 		.then((company) => {
 			res.status(201).json({ company: company })
 		})
-
 		.catch(next)
 })
 
@@ -69,6 +69,9 @@ router.delete('/companies/:id', requireToken, (req, res, next) => {
 		.then(handle404)
 		.then((company) => {
 			requireOwnership(req, company)
+		//Also delete reviews of company
+			Review.deleteMany({company: company.id})
+				.catch(next)
 			company.deleteOne()
 		})
 		.then(() => res.sendStatus(204))

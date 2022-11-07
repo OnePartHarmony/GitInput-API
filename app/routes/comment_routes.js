@@ -19,7 +19,7 @@ router.post("/comments/:reviewId", requireToken, (req,res,next) => {
     Review.findById(reviewId)
         .then(review => {
             review.comments.push(req.body)
-            return review.save()
+            return review.save({timestamps: false})
         })
         .then(res.sendStatus(204))
         .catch(next)
@@ -35,7 +35,7 @@ router.patch('/comments/:reviewId/:commentId', requireToken, removeBlanks, (req,
             const theComment = review.comments.id(req.params.commentId)
             requireOwnership(req, theComment)
             theComment.comment = req.body.comment
-            review.save()
+            review.save({timestamps: false})
         })
         .then(() => res.sendStatus(204))
         .catch(next)
@@ -52,7 +52,7 @@ router.delete('/delete/:reviewId/:commentId', requireToken, (req, res, next) => 
             const theComment = review.comments.id(commentId)
             requireOwnership(req, theComment)
             theComment.remove()
-            review.save()
+            review.save({timestamps: false})
             res.sendStatus(204)
         })
         .catch(next)
