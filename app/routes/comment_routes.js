@@ -19,7 +19,7 @@ router.post("/comments/:reviewId", requireToken, (req,res,next) => {
     Review.findById(reviewId)
         .then(review => {
             review.comments.push(req.body)
-            return review.save()
+            return review.save({timestamps: false})
         })
         .then(res.sendStatus(204))
         .catch(next)
