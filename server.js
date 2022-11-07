@@ -15,7 +15,6 @@ const replaceToken = require('./lib/replace_token')
 const requestLogger = require('./lib/request_logger')
 
 // require database configuration logic
-// `db` will be the actual Mongo URI as a string
 const db = require('./config/db')
 
 // require configured passport authentication middleware
@@ -27,8 +26,6 @@ const serverDevPort = 8000
 const clientDevPort = 3000
 
 // establish database connection
-// use new version of URL parser
-// use createIndex instead of deprecated ensureIndex
 mongoose.connect(db, {
 	useNewUrlParser: true,
 })
@@ -37,7 +34,6 @@ mongoose.connect(db, {
 const app = express()
 
 // set CORS headers on response from this API using the `cors` NPM package
-// `CLIENT_ORIGIN` is an environment variable that will be set on Heroku
 app.use(
 	cors({
 		origin: process.env.CLIENT_ORIGIN || `http://localhost:${clientDevPort}`,
@@ -45,7 +41,6 @@ app.use(
 )
 
 // define port for API to run on
-// adding PORT= to your env file will be necessary for deployment
 const port = process.env.PORT || serverDevPort
 
 // this middleware makes it so the client can use the Rails convention
@@ -73,11 +68,9 @@ app.use(reviewRoutes)
 app.use(commentRoutes)
 
 // register error handling middleware
-// note that this comes after the route middlewares, because it needs to be
-// passed any error messages from them
 app.use(errorHandler)
 
-// run API on designated port (4741 in this case)
+// run API on designated port
 app.listen(port, () => {
 	console.log('listening on port ' + port)
 })
