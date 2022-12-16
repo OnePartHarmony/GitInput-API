@@ -56,7 +56,7 @@ As a user I want the ability to…
 - Express
 
 ## Front End
-https://github.com/OnePartHarmony/WDSTF-Project3-Client
+https://github.com/OnePartHarmony/GitInput-Client<br>
 git-input.netlify.app/
 
 ## Wireframes
